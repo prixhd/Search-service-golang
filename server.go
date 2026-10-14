@@ -23,8 +23,10 @@ type XMLDataset struct {
 	Rows []XMLUser `xml:"row"`
 }
 
+var datasetPath = "dataset.xml"
+
 func loadUsers() ([]User, error) {
-	file, err := os.Open("dataset.xml")
+	file, err := os.Open(datasetPath)
 	var dataset XMLDataset
 
 	if err != nil {
@@ -75,7 +77,7 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 
 	orderBy, err := strconv.Atoi(r.URL.Query().Get("order_by"))
 	if err != nil {
-		http.Error(w, "Invalid limit", http.StatusBadRequest)
+		http.Error(w, "Invalid order_by", http.StatusBadRequest)
 		return
 	}
 
@@ -87,7 +89,7 @@ func SearchServer(w http.ResponseWriter, r *http.Request) {
 
 	offset, err := strconv.Atoi(r.URL.Query().Get("offset"))
 	if err != nil {
-		http.Error(w, "Invalid limit", http.StatusBadRequest)
+		http.Error(w, "Invalid offset", http.StatusBadRequest)
 		return
 	}
 
